@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>Grupo Rimane · Ecossistema Digital</title>
+    <style>
+        :root {
+            --amarelo: #FFB800;
+            --laranja: #F97316;
+            --verde-folha: #2D6A4F;
+            --marrom-terra: #7F4F24;
+            --vermelho-vivo: #D62828;
+            --preto: #1E1E1E;
+            --branco: #FFFFFF;
+            --cinza-suave: #F5F5F5;
+            --sombra: 0 8px 30px rgba(0,0,0,0.08);
+            --borda: 20px;
+            --transicao: all 0.25s ease;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: #fafaf7;
+            color: var(--preto);
+            min-height: 100vh;
+            padding: 1rem;
+        }
+
+        .container-geral {
+            max-width: 1350px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        /* ========== PÁGINAS INTERNAS ========== */
+        .pagina {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+        .pagina.ativa { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ========== HEADER ========== */
+        .header {
+            background: var(--branco);
+            border-radius: var(--borda);
+            padding: 1.2rem 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: var(--sombra);
+            gap: 1rem;
+        }
+
+        .logo { display: flex; align-items: center; gap: 0.7rem; }
+        .logo-icone {
+            background: linear-gradient(135deg, var(--amarelo), var(--laranja));
+            width: 50px; height: 50px;
+            border-radius: 16px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.8rem; font-weight: 800; color: white;
+        }
+        .logo-texto h2 { font-size: 1.6rem; }
+        .logo-texto span { color: var(--laranja); }
+
+        .dominio-badge {
+            background: var(--preto); color: var(--amarelo);
+            padding: 0.5rem 1.2rem; border-radius: 50px;
+            font-weight: 700; font-size: 0.9rem;
+        }
+
+        /* ========== BOTÃO DOWNLOAD ZIP ========== */
+        .zip-banner {
+            background: linear-gradient(105deg, #1a1a1a, #2d2d2d);
+            border-radius: var(--borda);
+            padding: 1.8rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+            cursor: pointer;
+            transition: var(--transicao);
+            border: 2px solid transparent;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+        .zip-banner:hover {
+            border-color: var(--amarelo);
+            transform: scale(1.01);
+        }
+        .zip-banner .icone { font-size: 3.5rem; }
+        .zip-banner h3 { color: white; font-size: 1.6rem; }
+        .zip-banner p { color: #aaa; }
+
+        .btn-download {
+            background: var(--amarelo);
+            color: var(--preto);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 800;
+            border: none;
+            cursor: pointer;
+            transition: var(--transicao);
+            font-size: 1rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .btn-download:hover {
+            background: var(--laranja);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        /* ========== NAVEGAÇÃO ========== */
+        .nav-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            justify-content: center;
+        }
+        .nav-btn {
+            background: white;
+            border: 2px solid #e0dcd0;
+            padding: 0.7rem 1.3rem;
+            border-radius: 50px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transicao);
+            font-size: 0.9rem;
+            text-decoration: none;
+            color: var(--preto);
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .nav-btn:hover, .nav-btn.ativo {
+            background: var(--amarelo);
+            border-color: var(--amarelo);
+        }
+
+        /* ========== GRADE CARDS ========== */
+        .grade {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+        }
+        .card {
+            background: white;
+            border-radius: var(--borda);
+            padding: 1.5rem 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transicao);
+            border: 2px solid transparent;
+            text-decoration: none;
+            color: var(--preto);
+        }
+        .card:hover {
+            border-color: var(--laranja);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 25px rgba(249,115,22,0.12);
+        }
+        .card-icone { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .card h4 { font-size: 1.1rem; margin-bottom: 0.3rem; }
+        .card small { color: var(--marrom-terra); }
+
+        /* ========== PÁGINAS INTERNAS ESTILO ========== */
+        .pagina-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .btn-voltar {
+            background: var(--cinza-suave);
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: var(--transicao);
+            text-decoration: none;
+            color: var(--preto);
+        }
+        .btn-voltar:hover { background: #ddd; }
+
+        .painel-info {
+            background: white;
+            border-radius: var(--borda);
+            padding: 2rem;
+            box-shadow: var(--sombra);
+            margin-top: 1rem;
+        }
+
+        .grid-config {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.2rem;
+        }
+
+        .acao-btn {
+            background: var(--amarelo);
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transicao);
+            font-size: 0.9rem;
+            text-decoration: none;
+            color: var(--preto);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .acao-btn:hover {
+            background: var(--laranja);
+            color: white;
+        }
+        .acao-btn.verde { background: var(--verde-folha); color: white; }
+        .acao-btn.vermelho { background: var(--vermelho-vivo); color: white; }
+
+        .aviso {
+            background: #e8f5e9;
+            border-left: 5px solid var(--verde-folha);
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            margin: 1rem 0;
+            font-weight: 500;
+        }
+
+        .notificacao {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background: var(--preto);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            z-index: 9999;
+            font-weight: 600;
+            animation: slideUp 0.3s ease;
+        }
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @media (max-width: 600px) {
+            .grade { grid-template-columns: repeat(2, 1fr); }
+            .zip-banner { flex-direction: column; text-align: center; }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="container-geral">
+
+        <!-- ==================== PÁGINA INICIAL ==================== -->
+        <div class="pagina ativa" id="pagina-inicial">
+            <header class="header">
+                <div class="logo">
+                    <div class="logo-icone">R</div>
+                    <div class="logo-texto"><h2>Rimane<span>.</span></h2><small>Organizações Rimane</small></div>
+                </div>
+                <div class="dominio-badge"><i class="fas fa-globe"></i> zuririmane.com.br</div>
+            </header>
+
+            <!-- DOWNLOAD ZIP DESTAQUE -->
+            <div class="zip-banner" id="downloadTrigger" style="cursor:pointer;">
+                <div class="icone">📦</div>
+                <div style="text-align:center;">
+                    <h3>Ecossistema Completo</h3>
+                    <p>FlowHost · Vel Cut · Universal Ads · Bank Invest · Hub Seller · Flobusiness · Hype Food · Hype Carona · Biblioteca do Saber</p>
+                    <button class="btn-download" style="margin-top:1rem;" onclick="event.stopPropagation(); baixarZip();">
+                        <i class="fas fa-download"></i> Baixar ZIP Completo
+                    </button>
+                </div>
+            </div>
+
+            <!-- NAVEGAÇÃO -->
+            <nav class="nav-bar">
+                <button class="nav-btn ativo" onclick="navegar('inicial')"><i class="fas fa-home"></i> Início</button>
+                <button class="nav-btn" onclick="navegar('flowhost')"><i class="fas fa-cloud"></i> FlowHost</button>
+                <button class="nav-btn" onclick="navegar('velcut')"><i class="fas fa-film"></i> Vel Cut</button>
+                <button class="nav-btn" onclick="navegar('universalads')"><i class="fas fa-bullhorn"></i> Universal Ads</button>
+                <button class="nav-btn" onclick="navegar('bankinvest')"><i class="fas fa-chart-line"></i> Bank Invest</button>
+                <button class="nav-btn" onclick="navegar('hubseller')"><i class="fas fa-store"></i> Hub Seller</button>
+                <button class="nav-btn" onclick="navegar('config')"><i class="fas fa-cog"></i> Configurações</button>
+            </nav>
+
+            <!-- CARDS -->
+            <div class="grade">
+                <div class="card" onclick="navegar('flowhost')"><div class="card-icone">☁️</div><h4>FlowHost</h4><small>Hospedagem Multi-nuvem</small></div>
+                <div class="card" onclick="navegar('velcut')"><div class="card-icone">🎬</div><h4>Vel Cut</h4><small>Edição com 1 foto</small></div>
+                <div class="card" onclick="navegar('universalads')"><div class="card-icone">📢</div><h4>Universal Ads</h4><small>Campanhas</small></div>
+                <div class="card" onclick="navegar('bankinvest')"><div class="card-icone">🏦</div><h4>Bank Invest</h4><small>Financeiro</small></div>
+                <div class="card" onclick="navegar('hubseller')"><div class="card-icone">🛍️</div><h4>Hub Seller</h4><small>Lojas</small></div>
+                <div class="card" onclick="navegar('flobusiness')"><div class="card-icone">💼</div><h4>Flobusiness</h4><small>Gestão</small></div>
+                <div class="card" onclick="navegar('hypefood')"><div class="card-icone">🍔</div><h4>Hype Food</h4><small>Delivery</small></div>
+                <div class="card" onclick="navegar('hypecarona')"><div class="card-icone">🚗</div><h4>Hype Carona</h4><small>Mobilidade</small></div>
+                <div class="card" onclick="navegar('biblioteca')"><div class="card-icone">📚</div><h4>Biblioteca do Saber</h4><small>Educação</small></div>
+                <div class="card" onclick="navegar('config')"><div class="card-icone">⚙️</div><h4>Configurações</h4><small>Admin</small></div>
+            </div>
+
+            <div class="aviso">
+                ✅ <strong>Atualização concluída!</strong> Sua estrutura foi melhorada automaticamente. Nada mudou para você — seus sites, domínios e dados continuam todos aqui, agora com mais velocidade e segurança.
+            </div>
+        </div>
+
+        <!-- ==================== FLOWHOST ==================== -->
+        <div class="pagina" id="pagina-flowhost">
+            <div class="pagina-header">
+                <button class="btn-voltar" onclick="navegar('inicial')">← Voltar</button>
+                <h2>☁️ FlowHost · Hospedagem Inteligente</h2>
+            </div>
+            <div class="painel-info">
+                <h3>Multi-nuvem com FlowRoute Engine</h3>
+                <p>Seu site migra automaticamente entre Cloudflare, Netlify, Vercel e GitHub Pages para melhor desempenho e custo.</p>
+                <div class="grid-config" style="margin-top:1.5rem;">
+                    <div><strong>Domínio grátis:</strong> seuprojeto.flowhost.com.br</div>
+                    <div><strong>.com:</strong> R$29,90/ano</div>
+                    <div><strong>.com.br:</strong> R$24,90/ano</div>
+                    <div><strong>SSL:</strong> Automático e gratuito</div>
+                </div>
+                <div style="margin-top:1.5rem; display:flex; gap:1rem; flex-wrap:wrap;">
+                    <button class="acao-btn" onclick="notificar('Site enviado para hospedagem!')"><i class="fas fa-upload"></i> Enviar Site</button>
+                    <button class="acao-btn verde" onclick="notificar('Domínio registrado!')"><i class="fas fa-globe"></i> Registrar Domínio</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== VEL CUT ==================== -->
+        <div class="pagina" id="pagina-velcut">
+            <div class="pagina-header">
+                <button class="btn-voltar" onclick="navegar('inicial')">← Voltar</button>
+                <h2>🎬 Vel Cut · Criação e Edição</h2>
+            </div>
+            <div class="painel-info">
+                <h3>1 foto = Vídeos profissionais em 4K 60fps</h3>
+                <p>Publique simultaneamente em TikTok, Instagram, YouTube, Kwai, Shopee e Mercado Livre.</p>
+                <div style="margin-top:1.5rem; display:flex; gap:1rem; flex-wrap:wrap;">
+                    <button class="acao-btn" onclick="notificar('Projeto criado! Envie sua foto.')"><i class="fas fa-plus"></i> Novo Projeto</button>
+                    <button class="acao-btn verde" onclick="notificar('Publicado em 6 plataformas!')"><i class="fas fa-share"></i> Publicar Agora</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== UNIVERSAL ADS ==================== -->
+        <div class="pagina" id="pagina-universalads">
+            <div class="pagina-header">
+                <button class="btn-voltar" onclick="navegar('inicial')">← Voltar</button>
+                <h2>📢 Universal Ads · Campanhas</h2>
+            </div>
+            <div class="painel-info">
+                <h3>Gestão de anúncios e comissão de afiliados</h3>
+                <p>Crie campanhas para todas as plataformas com taxa integrada.</p>
+                <button class="acao-btn" onclick="notificar('Campanha criada!')"><i class="fas fa-rocket"></i> Nova Campanha</button>
+            </div>
+        </div>
+
+        <!-- ==================== BANK INVEST ==================== -->
+        <div class="pagina" id="pagina-bankinvest">
+            <div class="pagina-header">
+                <button class="btn-voltar" onclick="navegar('inicial')">← Voltar</button>
+                <h2>🏦 Bank Invest · Financeiro</h2>
+            </div>
+            <div class="painel-info">
+                <h3>Conta digital, Pix, investimentos e câmbio</h3>
+                <p>Repasses automáticos de comissões de todas as ferramentas do grupo.</p>
+                <button class="acao-btn" onclick="notificar('Conta acessada!')"><i class="fas fa-wallet"></i> Acessar Conta</button>
+            </div>
+        </div>
+
+        <!-- ==================== HUB SELLER ==================== -->
+        <div class="pagina" id="pagina-hubseller">
+            <div class="pagina-header">
+                <button class="btn-voltar" onclick="navegar('inicial')">← Voltar</button>
+                <h2>🛍️ Hub Seller · Lojas</h2>
+            </div>
+            <div class="painel-info">
+                <h3>Marketplace integrado</h3>
+                <p>Gerencie Mercado Livre, Shopee e loja própria em um só lugar.</p>
+                <button class="acao-btn" onclick="notificar('Loja sincronizada!')"><i class="fas fa-sync"></i> Sincronizar Lojas</button>
+            </div>
+        </div>
+
+        <!-- ==================== FLOBUSINESS ==================== -->
+        <div class="pagina" id="pagina-flobusiness">
+            <div class="pagina-header">
+                <button class="btn-voltar" onclick="navegar('inicial')">← Voltar</button>
+                <h2>💼 Flobusiness · Gestão</h2>
+            </div>
+            <div class="painel-info">
+                <h3>ERP completo</h3>
+                <p>Gestão empresarial integrada com todas as ferramentas Rimane.</p>
+                <button class="acao-btn" onclick="notificar('Dashboard carregado!')"><i class="fas fa-chart-bar"></i> Dashboard</button>
+            </div>
+        </div>
+
+        <!-- ==================== HYPE FOOD ==================== -->
+        <div class="pagina" id="pagina-hypefood">
+            <div class="pagina-header">
+                <button class="btn-voltar" onclick="navegar('inicial')">← Voltar</button>
+                <h2>🍔 Hype Food · Delivery</h2>
+            </div>
+            <div class="painel-info">
+                <h3>Delivery rápido</h3>
+                <p>Plataforma de pedidos com logística integrada.</p>
+                <button class="acao-btn" onclick="notificar('Cardápio atualizado!')"><i class="fas fa-utensils"></i> Gerenciar Cardápio</button>
+            </div>
+        </div>
+
+        <!-- ==================== HYPE CARONA ==================== -->
+        <div class="pagina" id="pagina-hypecarona">
+            <div class="pagina-header">
+                <button class="btn-voltar" onclick="navegar('inicial')">← Voltar</button>
+                <h2>🚗 Hype Carona · Mobilidade</h2>
+            </div>
+            <div class="painel-info">
+                <h3>Caronas compartilhadas</h3>
+                <p>Ofereça ou encontre caronas com segurança.</p>
+                <button class="acao-btn" onclick="notificar('Rota publicada!')"><i class="fas fa-route"></i> Publicar Rota</button>
+            </div>
+        </div>
+
+        <!-- ==================== BIBLIOTECA DO SABER ==================== -->
+        <div class="pagina" id="pagina-biblioteca">
+            <div class="pagina-header">
+                <button class="btn-voltar" onclick="navegar('inicial')">← Voltar</button>
+                <h2>📚 Biblioteca do Saber</h2>
+            </div>
+            <div class="painel-info">
+                <h3>Conhecimento livre</h3>
+                <p>Conteúdo educativo gratuito e premium.</p>
+                <button class="acao-btn" onclick="notificar('Acervo acessado!')"><i class="fas fa-book"></i> Explorar Acervo</button>
+            </div>
+        </div>
+
+        <!-- ==================== CONFIGURAÇÕES ==================== -->
+        <div class="pagina" id="pagina-config">
+            <div class="pagina-header">
+                <button class="btn-voltar" onclick="navegar('inicial')">← Voltar</button>
+                <h2>⚙️ Configurações</h2>
+            </div>
+            <div class="painel-info">
+                <h3>Domínios, SSL e Preferências</h3>
+                <div style="display:flex; gap:1rem; flex-wrap:wrap; margin-top:1rem;">
+                    <button class="acao-btn" onclick="notificar('SSL ativado!')"><i class="fas fa-l
