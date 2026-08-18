@@ -1,35 +1,35 @@
 
           
-          name: Implantar Páginas do Cloudflare
+  
+          
+name: Deploy Cloudflare Pages
 on:
   push:
-    branches: [main, master, principal]
+    branches: [main, master]
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Confira
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Configurar Flutter
+      - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.x'
           channel: 'stable'
 
-      - name: Instalar dependências
+      - name: Install dependencies
         run: flutter pub get
 
-      - name: Criar site com Flutter
+      - name: Build Web
         run: flutter build web --release
 
-      - name: Implantar no Cloudflare Pages
+      - name: Deploy to Cloudflare Pages
         uses: cloudflare/pages-action@v1
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: 4250e2a3de571b1553a5cb3292850358
           projectName: zuririmane
           directory: build/web
-          
-  
           
